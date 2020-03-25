@@ -1,4 +1,9 @@
+"""
+Summation functions
+"""
 
-
-def sum(a, b):
-    return a + b
+def summation(*args):
+    """
+    Sums variables a and b
+    """
+    return sum(args)
