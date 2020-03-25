@@ -34,3 +34,9 @@ blocks:
         - name: Pylint
           commands:
             - docker run nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA} sh -c 'find . -type f -name "*.py" | xargs pylint'
+
+promotions:
+  - name: Production deploy
+    pipeline_file: production-deploy.yml
+    auto_promote:
+      when: "result = 'passed' and branch = 'master'"
