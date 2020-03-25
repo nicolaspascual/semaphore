@@ -26,7 +26,7 @@ blocks:
         - name: DOCKER
       prologue:
         commands:
-          - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+            - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
       jobs:
         - name: Pytest
           commands:
