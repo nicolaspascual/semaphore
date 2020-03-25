@@ -25,7 +25,7 @@ blocks:
         - name: DOCKER
       prologue:
         commands:
-          "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+          - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
       jobs:
         - name: Pytest
           commands:
