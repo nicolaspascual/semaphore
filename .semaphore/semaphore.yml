@@ -12,9 +12,18 @@ blocks:
           commands:
             - checkout
             - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
-            - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
-        - name: Login
-          commands:
             - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
+            - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
       secrets:
         - name: DOCKER
+
+  - name: "🧪 Testing"
+    dependencies:
+      - "🐳 Docker Build & Publish"
+    prologue:
+      - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+    task:
+      jobs:
+        - name: Pytest
+          commands:
+            - "docker run nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA} pytest"
