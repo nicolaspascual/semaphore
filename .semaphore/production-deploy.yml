@@ -6,7 +6,8 @@ agent:
     os_image: ubuntu1804
 blocks:
   - name: "🚀 Deploy"
-    jobs:
-      - name: deploy
-        commands:
-          - echo "DEPLOYING..."
+    task:
+      jobs:
+        - name: deploy
+          commands:
+            - echo "DEPLOYING..."
