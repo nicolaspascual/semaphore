@@ -14,9 +14,9 @@ blocks:
         - name: Build & publish
           commands:
             - checkout
-            - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
-            - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
-            - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+            - docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}
+            - docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}
+            - docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}
 
   - name: "🧪 Testing"
     dependencies:
@@ -26,8 +26,11 @@ blocks:
         - name: DOCKER
       prologue:
         commands:
-            - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
+            - docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}
       jobs:
         - name: Pytest
           commands:
-            - "docker run nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA} pytest"
+            - docker run nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA} pytest
+        - name: Pylint
+          commands:
+            - docker run nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA} sh -c 'find . -type f -name "*.py" | xargs pylint'
