@@ -21,8 +21,7 @@ blocks:
     dependencies:
       - "🐳 Docker Build & Publish"
     task:
-      prologue:
-        - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+      prologue: "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
       jobs:
         - name: Pytest
           commands:
