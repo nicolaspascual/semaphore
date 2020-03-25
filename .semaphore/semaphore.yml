@@ -5,9 +5,29 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: "🐳 Docker Build & Publish"
+    dependencies: []
     task:
+      secrets:
+        - name: DOCKER
       jobs:
-        - name: 'Job #1'
+        - name: Build & publish
           commands:
             - checkout
+            - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+            - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
+            - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+
+  - name: "🧪 Testing"
+    dependencies:
+      - "🐳 Docker Build & Publish"
+    task:
+      secrets:
+        - name: DOCKER
+      prologue:
+        commands:
+            - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
+      jobs:
+        - name: Pytest
+          commands:
+            - "docker run nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA} pytest"
