@@ -5,15 +5,13 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: "\U0001F433 Docker Build & Publish"
+  - name: "🐳 Docker Build & Publish"
     task:
       jobs:
-        - name: Build
+        - name: Build & publish
           commands:
             - checkout
             - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
-        - name: Publish
-          commands:
             - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
         - name: Login
           commands:
