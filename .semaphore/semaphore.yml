@@ -11,10 +11,12 @@ blocks:
         - name: Build
           commands:
             - checkout
-            - 'docker build . -t nicolaspascual/semaphoreci:$REVISION'
+            - 'docker build . -t nicolaspascual/semaphoreci:${REVISION}'
         - name: Publish
           commands:
-            - 'docker push nicolaspascual/semaphoreci:$REVISION'
+            - 'docker push nicolaspascual/semaphoreci:${REVISION}'
         - name: Login
           commands:
-            - docker login
+            - 'docker login ${DOCKER_USER} --password ${DOCKER_PASSWORD}'
+      secrets:
+        - name: DOCKER
