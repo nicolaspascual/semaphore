@@ -20,9 +20,9 @@ blocks:
   - name: "🧪 Testing"
     dependencies:
       - "🐳 Docker Build & Publish"
-    prologue:
-      - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
     task:
+      prologue:
+        - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
       jobs:
         - name: Pytest
           commands:
