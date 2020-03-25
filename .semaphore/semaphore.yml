@@ -15,6 +15,6 @@ blocks:
             - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
         - name: Login
           commands:
-            - "docker login ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
+            - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
       secrets:
         - name: DOCKER
