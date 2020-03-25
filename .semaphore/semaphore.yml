@@ -5,9 +5,16 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: 'Block #1'
+  - name: "\U0001F433 Docker Build & Publish"
     task:
       jobs:
-        - name: 'Job #1'
+        - name: Build
           commands:
             - checkout
+            - 'docker build . -t nicolaspascual/semaphoreci:$REVISION'
+        - name: Publish
+          commands:
+            - 'docker push nicolaspascual/semaphoreci:$REVISION'
+        - name: Login
+          commands:
+            - docker login
