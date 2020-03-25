@@ -7,6 +7,8 @@ agent:
 blocks:
   - name: "🐳 Docker Build & Publish"
     task:
+      secrets:
+        - name: DOCKER
       jobs:
         - name: Build & publish
           commands:
@@ -14,14 +16,16 @@ blocks:
             - "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
             - "docker login --username ${DOCKER_USER} --password ${DOCKER_PASSWORD}"
             - "docker push nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
-      secrets:
-        - name: DOCKER
 
   - name: "🧪 Testing"
     dependencies:
       - "🐳 Docker Build & Publish"
     task:
-      prologue: "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
+      secrets:
+        - name: DOCKER
+      prologue:
+        commands:
+          "docker build . -t nicolaspascual/semaphoreci:${SEMAPHORE_GIT_SHA}"
       jobs:
         - name: Pytest
           commands:
