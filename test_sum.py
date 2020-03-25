@@ -1,3 +1,6 @@
+"""
+Tests for module sum
+"""
 from sum import summation
 
 
